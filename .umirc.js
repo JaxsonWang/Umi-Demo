@@ -22,11 +22,12 @@ export default {
       },
     }],
   ],
-  "proxy": {
+  proxy: {
     "/api": {
       "target": "http://jsonplaceholder.typicode.com/",
       "changeOrigin": true,
       "pathRewrite": { "^/api": "" }
     }
   },
+  "sass": {}
 }

@@ -1,10 +1,22 @@
-import styles from './index.css';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
+import styles from './index.scss';
 
 function BasicLayout(props) {
   return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to umi!</h1>
-      {props.children}
+    <div>
+      <Row>
+        <Col className={styles.normal}>
+          淮城一只猫
+        </Col>
+      </Row>
+      <Grid>
+        <Row>
+          <Col>
+            {props.children}
+          </Col>
+        </Row>
+      </Grid>
     </div>
   );
 }

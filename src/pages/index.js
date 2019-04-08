@@ -1,4 +1,4 @@
-import styles from './index.css';
+import styles from './index.scss';
 
 
 export default function() {
