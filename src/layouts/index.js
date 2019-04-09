@@ -5,11 +5,13 @@ import styles from './index.scss';
 function BasicLayout(props) {
   return (
     <div>
-      <Row>
-        <Col className={styles.normal}>
-          淮城一只猫
+      <Grid fluid className={styles.px0}>
+        <Row className={styles.mx0}>
+          <Col className={styles.normal}>
+            淮城一只猫
         </Col>
-      </Row>
+        </Row>
+      </Grid>
       <Grid>
         <Row>
           <Col>
