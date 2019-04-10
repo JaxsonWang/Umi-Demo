@@ -1,8 +1,8 @@
 import { connect } from 'dva';
 import { Button, Table, Pagination, Popconfirm, LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
-import styles from './users.css';
-import { PAGE_SIZE } from '../constants';
+import styles from './index.css';
+import { PAGE_SIZE } from './constants';
 
 /**
  * 用户列表管理

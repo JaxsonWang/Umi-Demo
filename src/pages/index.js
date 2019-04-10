@@ -1,17 +1,10 @@
-import { List, Avatar, Icon } from 'antd';
+import { connect } from 'dva';
+import Link from 'umi/link';
 
-// import styles from './index.scss';
+import { List, Avatar, Icon, Tag } from 'antd';
+import dayjs from 'dayjs'
 
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'http://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content: 'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
+import styles from './index.scss';
 
 const IconText = ({ type, text }) => (
   <span>
@@ -20,33 +13,57 @@ const IconText = ({ type, text }) => (
   </span>
 );
 
-export default function() {
+const tagList = (list) => {
+  return  list.map((item) =>
+    <Tag key={item.id}>{item.name}</Tag>
+  );
+};
+
+const Index = ({ list, loading }) => {
   return (
     <List
       itemLayout="vertical"
       size="large"
+      loading={loading}
       pagination={{
         onChange: (page) => {
           console.log(page);
         },
-        pageSize: 3,
+        pageSize: 5,
       }}
-      dataSource={listData}
-      footer={<div><b>ant design</b> footer part</div>}
+      dataSource={list}
+      footer={<div>永远年轻，永远热泪盈眶！</div>}
       renderItem={item => (
         <List.Item
           key={item.title}
-          actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-          extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+          actions={!loading && [<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+          extra={!loading && <div className={styles.featureImage}><img alt="文章插图" src={item.feature_image} /></div>}
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.avatar} />}
-            title={<a href={item.href}>{item.title}</a>}
-            description={item.description}
+            avatar={<Avatar src={item.authors[0].profile_image} />}
+            title={<Link to={`/${item.slug}?${item.id}`}>{item.title}</Link>}
+            description={
+              <div>
+                <Tag color="blue"><time dateTime={item.published_at}>{dayjs(item.published_at).format('YYYY-MM-DD')}</time></Tag>
+                {tagList(item.tags)}
+              </div>
+            }
           />
-          {item.content}
+          {item.excerpt}
         </List.Item>
       )}
     />
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  const { list, total, page } = state.index;
+  return {
+    list,
+    total,
+    page,
+    loading: state.loading.models.index,
+  };
+};
+
+export default connect(mapStateToProps)(Index);
