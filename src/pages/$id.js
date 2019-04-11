@@ -1,21 +1,35 @@
+import { connect } from 'dva';
 import {Row, Col} from 'antd'
 import styles from './$id.scss'
 
-const IndexItem = () => {
+const IndexItem = ({ posts, loading }) => {
+  
+  const createMarkup = () => {
+    return {__html: posts.html};
+  }
+
   return (
     <div>
       <Row>
         <Col className={styles.headerTitle}>
-          <h4>标题</h4>
+          <h4>{posts.title}</h4>
         </Col>
       </Row>
       <Row>
         <Col>
-          <div>内容</div>
+          <div dangerouslySetInnerHTML={createMarkup()}/>
         </Col>
       </Row>
     </div>
   );
 };
 
-export default IndexItem
+const mapStateToProps = (state) => {
+  const { posts } = state.postItem;
+  return {
+    posts,
+    loading: state.loading.models.postItem,
+  };
+};
+
+export default connect(mapStateToProps)(IndexItem);

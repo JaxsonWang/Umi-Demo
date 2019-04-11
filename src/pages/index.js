@@ -41,7 +41,7 @@ const Index = ({ list, loading }) => {
         >
           <List.Item.Meta
             avatar={<Avatar src={item.authors[0].profile_image} />}
-            title={<Link to={`/${item.slug}?${item.id}`}>{item.title}</Link>}
+            title={<Link to={`/${item.slug}`}>{item.title}</Link>}
             description={
               <div>
                 <Tag color="blue"><time dateTime={item.published_at}>{dayjs(item.published_at).format('YYYY-MM-DD')}</time></Tag>

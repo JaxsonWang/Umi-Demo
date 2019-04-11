@@ -3,32 +3,32 @@ import { queryIndexItem } from '@/services/$id';
 export default {
   namespace: 'postItem',
   state: {
-    info: []
+    posts: []
   },
   reducers: {
-    save(state, { payload: { info } }) {
-      return { ...state, info };
+    save(state, { payload: { posts } }) {
+      return { ...state, posts };
     },
   },
   effects: {
-    *fetchIndexList({ payload: { postid } }, { call, put }) {
-      const {data} = yield call(queryIndexItem, { postid });
+    *fetchIndexItem({ payload: postid }, { call, put }) {
+      const { data } = yield call(queryIndexItem, postid);
       yield put({
         type: 'save',
         payload: {
-          info: data
+          posts: data.posts[0]
         }
       });
     },
   },
-  // 订阅模式 进入`/`触发获取数据
+  // 订阅模式
   subscriptions: {
     setup({ dispatch, history }) {
-      console.log(history)
       return history.listen(({ pathname, query }) => {
-        // if (pathname === '/') {
-        //   dispatch({ type: 'fetchIndexList', payload: query });
-        // }
+        if (pathname !== '') {
+          // 获取文章数据
+          dispatch({ type: 'fetchIndexItem', payload: pathname });
+        }
       });
     },
   },
