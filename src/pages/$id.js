@@ -1,23 +1,33 @@
 import { connect } from 'dva';
-import {Row, Col} from 'antd'
-import styles from './$id.scss'
+import { Row, Col, Tag } from 'antd';
+import styles from './$id.scss';
 
 const IndexItem = ({ posts, loading }) => {
-  
-  const createMarkup = () => {
-    return {__html: posts.html};
-  }
 
   return (
     <div>
       <Row>
         <Col className={styles.headerTitle}>
           <h4>{posts.title}</h4>
+          {
+            (posts.authors ? posts.authors : []).map(item => {
+              return (
+                <Tag key={item.id} href="#">作者：{item.name}</Tag>
+              );
+            })
+          }
+          {
+            (posts.tags ? posts.tags : []).map(item => {
+              return (
+                <Tag key={item.id}>标签：{item.name}</Tag>
+              )
+            })
+          }
         </Col>
       </Row>
       <Row>
         <Col>
-          <div dangerouslySetInnerHTML={createMarkup()}/>
+          <div dangerouslySetInnerHTML={{ __html: posts.html }}/>
         </Col>
       </Row>
     </div>
