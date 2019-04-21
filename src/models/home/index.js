@@ -1,4 +1,4 @@
-import { queryIndexList } from '@/services/index';
+import { queryIndexList } from '@/services/home/index';
 
 export default {
   namespace: 'index',

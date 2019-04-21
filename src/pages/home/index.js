@@ -6,20 +6,13 @@ import dayjs from 'dayjs'
 
 import styles from './index.scss';
 
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-);
-
 const tagList = (list) => {
   return  list.map((item) =>
     <Tag key={item.id}>{item.name}</Tag>
   );
 };
 
-const Index = ({ list, loading }) => {
+const Index = ({ list, settings, loading }) => {
   return (
     <List
       itemLayout="vertical"
@@ -32,11 +25,10 @@ const Index = ({ list, loading }) => {
         pageSize: 5,
       }}
       dataSource={list}
-      footer={<div>永远年轻，永远热泪盈眶！</div>}
+      footer={<div>{ settings.description }</div>}
       renderItem={item => (
         <List.Item
           key={item.title}
-          actions={!loading && [<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
           extra={!loading && <div className={styles.featureImage}><img alt="文章插图" src={item.feature_image} /></div>}
         >
           <List.Item.Meta
@@ -58,10 +50,12 @@ const Index = ({ list, loading }) => {
 
 const mapStateToProps = (state) => {
   const { list, total, page } = state.index;
+  const { settings } = state.settings;
   return {
     list,
     total,
     page,
+    settings,
     loading: state.loading.models.index,
   };
 };

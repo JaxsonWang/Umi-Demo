@@ -1,4 +1,4 @@
-import { queryIndexItem } from '@/services/$id';
+import { queryIndexItem } from '@/services/home/article';
 
 export default {
   namespace: 'postItem',
@@ -24,8 +24,8 @@ export default {
   // 订阅模式
   subscriptions: {
     setup({ dispatch, history }) {
-      return history.listen(({ pathname, query }) => {
-        if (pathname !== '') {
+      return history.listen(({ pathname }) => {
+        if (pathname !== '/') {
           // 获取文章数据
           dispatch({ type: 'fetchIndexItem', payload: pathname });
         }

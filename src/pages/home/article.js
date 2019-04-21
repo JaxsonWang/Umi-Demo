@@ -1,11 +1,12 @@
 import { connect } from 'dva';
-import { Row, Col, Tag } from 'antd';
-import styles from './$id.scss';
+import { Row, Col, Tag, Skeleton } from 'antd';
+import styles from './article.scss';
 
 const IndexItem = ({ posts, loading }) => {
 
   return (
     <div>
+      <Skeleton loading={loading} active paragraph={{ rows: 10 }}>
       <Row>
         <Col className={styles.headerTitle}>
           <h4>{posts.title}</h4>
@@ -27,9 +28,10 @@ const IndexItem = ({ posts, loading }) => {
       </Row>
       <Row>
         <Col>
-          <div dangerouslySetInnerHTML={{ __html: posts.html }}/>
+          <div className={styles.articleContent} dangerouslySetInnerHTML={{ __html: posts.html }}/>
         </Col>
       </Row>
+      </Skeleton>
     </div>
   );
 };

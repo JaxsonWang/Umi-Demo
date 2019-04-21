@@ -22,6 +22,16 @@ export default {
       },
     }],
   ],
+  // 路由配置
+  routes: [
+    {
+      path: '/', component: '../layouts/index',
+      routes: [
+        { path: '/', component: './home/index' },
+        { path: '/:id', component: './home/article' }
+      ]
+    },
+  ],
   proxy: {
     "/api": {
       "target": "http://jsonplaceholder.typicode.com/",
